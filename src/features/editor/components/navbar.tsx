@@ -1,13 +1,5 @@
 "use client";
 
-import { Logo } from "@/features/editor/components/logo";
-import { CiFileOn } from "react-icons/ci";
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
 import {
   ChevronDown,
   Download,
@@ -15,12 +7,20 @@ import {
   Redo2,
   Undo2,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Hint } from "@/components/hint";
-import { BsCloudCheck } from "react-icons/bs";
-import { ActiveTool } from "@/features/editor/types";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { Hint } from "@/components/hint";
+import { CiFileOn } from "react-icons/ci";
+import { BsCloudCheck } from "react-icons/bs";
+import { Button } from "@/components/ui/button";
+import { ActiveTool } from "@/features/editor/types";
+import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/features/editor/components/logo";
 
 interface NavbarProps {
   activeTool: ActiveTool;
