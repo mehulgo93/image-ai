@@ -81,6 +81,7 @@ export type BuildEditorProps = {
     setFillColor: (value: string) => void;
     setStrokeColor: (value: string) => void;
     setStrokeWidth: (value: number) => void;
+    selectedObjects: fabric.Object[];
 }
 
 export interface Editor {
@@ -97,5 +98,7 @@ export interface Editor {
     fillColor: string;
     strokeColor: string;
     strokeWidth: number;
+
+    selectedObjects: fabric.Object[];
     
 }

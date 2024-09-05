@@ -79,3 +79,14 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .circle-picker {
+    width: auto !important;
+  }
+
+  .chrome-picker {
+    width: auto !important;
+    box-shadow: none !important;
+    border-radius: 0.5 rem !important;
+    overflow: hiddens !important;
+  }
