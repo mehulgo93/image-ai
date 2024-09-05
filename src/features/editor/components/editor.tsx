@@ -1,7 +1,6 @@
 "use client";
 
 import { fabric } from "fabric";
-import { ActiveTool } from "@/features/editor/types";
 import { Footer } from "@/features/editor/components/footer";
 import { Navbar } from "@/features/editor/components/navbar";
 import { useEditor } from "@/features/editor/hooks/use-editor";
@@ -9,6 +8,7 @@ import { Sidebar } from "@/features/editor/components/sidebar";
 import { Toolbar } from "@/features/editor/components/toolbar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ShapeSidebar } from "@/features/editor/components/shape-sidebar";
+import { ActiveTool, selectionDependentTools } from "@/features/editor/types";
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 
 export const Editor = () => {
@@ -29,7 +29,15 @@ export const Editor = () => {
     },
     [activeTool]
   );
-  const { init, editor } = useEditor();
+
+  const onClearSelection = useCallback(() => {
+    if (selectionDependentTools.includes(activeTool)) {
+      setActiveTool("select");
+    }
+  }, [activeTool]);
+  const { init, editor } = useEditor({
+    clearSelectionCallback: onClearSelection,
+  });
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -6,9 +6,10 @@ interface UseCanvasEventsProps {
     canvas: fabric.Canvas | null;
     container: HTMLDivElement | null;
     setSelectedObjects: (objects: fabric.Object[]) => void;
+    clearSelectionCallback?: () => void;
 }
 
-export const useCanvasEvents = ({canvas, container, setSelectedObjects}: UseCanvasEventsProps) => {
+export const useCanvasEvents = ({canvas, container, setSelectedObjects, clearSelectionCallback,}: UseCanvasEventsProps) => {
     useEffect(() => {
         if (canvas) {
             canvas.on("selection:created", (e) => {
@@ -19,6 +20,7 @@ export const useCanvasEvents = ({canvas, container, setSelectedObjects}: UseCanv
             });
             canvas.on("selection:cleared", () => {
                 setSelectedObjects([]);
+                clearSelectionCallback?.();
             });
         }
         return () => {
@@ -28,5 +30,5 @@ export const useCanvasEvents = ({canvas, container, setSelectedObjects}: UseCanv
                 canvas.off("selection:cleared");
             }
         };
-    }, [canvas, setSelectedObjects])
+    }, [canvas, setSelectedObjects, clearSelectionCallback])
 };
