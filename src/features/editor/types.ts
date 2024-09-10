@@ -110,7 +110,7 @@ export interface Editor {
     changeStrokeWidth: (value: number) => void;
     changeStrokeColor: (value: string) => void;
     getActiveFillColor: () => string;
-    strokeColor: string;
+    getActiveStrokeColor: () => string;
     strokeWidth: number;
 
     selectedObjects: fabric.Object[];
