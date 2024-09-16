@@ -89,6 +89,7 @@ const buildEditor = ({
                 fill: fillColor,
                 stroke: strokeColor,
                 strokeWidth: strokeWidth,
+                strokeDashArray: strokeDashArray,
             });
 
             addToCanvas(object);
@@ -101,6 +102,7 @@ const buildEditor = ({
             fill: fillColor,
             stroke: strokeColor,
             strokeWidth: strokeWidth,
+            strokeDashArray: strokeDashArray,
         });
 
         addToCanvas(object);
@@ -111,6 +113,7 @@ const buildEditor = ({
             fill: fillColor,
             stroke: strokeColor,
             strokeWidth: strokeWidth,
+            strokeDashArray: strokeDashArray,
         });
 
         addToCanvas(object);
@@ -120,7 +123,8 @@ const buildEditor = ({
             ...TRIANGLE_OPTIONS,
             fill: fillColor,
             stroke: strokeColor,
-            strokeWidth: strokeWidth
+            strokeWidth: strokeWidth,
+            strokeDashArray: strokeDashArray,
         });
 
         addToCanvas(object);
@@ -138,7 +142,8 @@ const buildEditor = ({
             ...TRIANGLE_OPTIONS,
             fill: fillColor,
             stroke: strokeColor,
-            strokeWidth: strokeWidth
+            strokeWidth: strokeWidth,
+            strokeDashArray: strokeDashArray,
         }
        );
 
@@ -158,7 +163,8 @@ const buildEditor = ({
              ...DIAMOND_OPTIONS,
              fill: fillColor,
             stroke: strokeColor,
-            strokeWidth: strokeWidth
+            strokeWidth: strokeWidth,
+            strokeDashArray: strokeDashArray,
          }
         );
  
@@ -191,7 +197,7 @@ const buildEditor = ({
         if (!selectedObject) {
             return strokeWidth;
         }
-        const value = selectedObject.get("strokeWidth") || strokeColor;
+        const value = selectedObject.get("strokeWidth") || strokeWidth;
 
         return value as number;
      },

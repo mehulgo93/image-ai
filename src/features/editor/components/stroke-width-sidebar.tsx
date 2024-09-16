@@ -58,12 +58,12 @@ export const StrokeWidthSidebar = ({
         <div className="p-4 space-y-4 border-b">
           <Label className="text-sm">Stroke type</Label>
           <Button
-            onChange={() => onChangeStrokeType([])}
+            onClick={() => onChangeStrokeType([])}
             variant="secondary"
             size="lg"
             className={cn(
               "w-full h-16 justify-start text-left",
-              JSON.stringify(typeValue)
+              JSON.stringify(typeValue) === `[]` && "border-2 border-blue-500"
             )}
             style={{ padding: "8px 16px" }}
           >
@@ -73,7 +73,11 @@ export const StrokeWidthSidebar = ({
             onClick={() => onChangeStrokeType([5, 5])}
             variant="secondary"
             size="lg"
-            className="w-full h-16 justify-start text-left"
+            className={cn(
+              "w-full h-16 justify-start text-left",
+              JSON.stringify(typeValue) === `[5,5]` &&
+                "border-2 border-blue-500"
+            )}
             style={{ padding: "8px 16px" }}
           >
             <div className="w-full border-black rounded-full border-4 border-dashed" />
