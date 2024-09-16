@@ -41,6 +41,7 @@ export type ActiveTool =
 export const FILL_COLOR = "rgba(0, 0, 0, 1)";
 export const STROKE_COLOR = "rgba(0, 0, 0, 1)";
 export const STROKE_WIDTH = 2;
+export const STROKE_DASH_ARRAY = []
 
 export const TRIANGLE_OPTIONS = {
     left: 100,
@@ -96,6 +97,8 @@ export type BuildEditorProps = {
     setStrokeColor: (value: string) => void;
     setStrokeWidth: (value: number) => void;
     selectedObjects: fabric.Object[];
+    strokeDashArray: number[];
+    setStrokeDashArray: (value: number[]) => void;
 }
 
 export interface Editor {
@@ -109,9 +112,11 @@ export interface Editor {
     changeFillColor: (value: string) => void;
     changeStrokeWidth: (value: number) => void;
     changeStrokeColor: (value: string) => void;
+    changeStrokeDashArray:(value: number[]) => void;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;
-    strokeWidth: number;
+    getActiveStrokeWidth: () => number;
+    getActiveStrokeDashArray: () => number[];
 
     selectedObjects: fabric.Object[];
     

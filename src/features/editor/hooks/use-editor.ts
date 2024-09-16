@@ -8,6 +8,7 @@ import {
     FILL_COLOR,
     RECTANGLE_OPTIONS,
     STROKE_COLOR,
+    STROKE_DASH_ARRAY,
     STROKE_WIDTH,
     TRIANGLE_OPTIONS
     } from "@/features/editor/types";
@@ -25,7 +26,9 @@ const buildEditor = ({
     setFillColor,
     setStrokeColor,
     setStrokeWidth,
-    selectedObjects 
+    selectedObjects,
+    strokeDashArray,
+    setStrokeDashArray
 }: BuildEditorProps): Editor => {
     const getWorkspace = () => {
         return canvas
@@ -70,6 +73,13 @@ const buildEditor = ({
             setStrokeWidth(value);
             canvas.getActiveObjects().forEach((object) => {
                 object.set({strokeWidth: value});
+            })
+            canvas.renderAll();
+        },
+        changeStrokeDashArray: (value: number[]) => {
+            setStrokeDashArray(value);
+            canvas.getActiveObjects().forEach((object) => {
+                object.set({strokeDashArray: value});
             })
             canvas.renderAll();
         },
@@ -175,7 +185,26 @@ const buildEditor = ({
 
         return value;
      },
-     strokeWidth,
+     getActiveStrokeWidth: () => {
+        const selectedObject = selectedObjects[0];
+
+        if (!selectedObject) {
+            return strokeWidth;
+        }
+        const value = selectedObject.get("strokeWidth") || strokeColor;
+
+        return value as number;
+     },
+     getActiveStrokeDashArray: () => {
+        const selectedObject = selectedObjects[0];
+
+        if (!selectedObject) {
+            return strokeDashArray;
+        }
+        const value = selectedObject.get("strokeDashArray") || strokeDashArray;
+
+        return value;
+     },
      selectedObjects
     };
 }
@@ -190,6 +219,7 @@ export const useEditor = ({
     const [fillColor, setFillColor] = useState(FILL_COLOR);
     const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
     const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
+    const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
     useAutoResize({
         canvas,
@@ -205,11 +235,11 @@ export const useEditor = ({
 
     const editor = useMemo(() => {
         if (canvas) {
-            return buildEditor({canvas, fillColor, strokeColor, strokeWidth, setFillColor, setStrokeColor, setStrokeWidth, selectedObjects});
+            return buildEditor({canvas, fillColor, strokeColor, strokeDashArray, strokeWidth, setFillColor, setStrokeColor, setStrokeWidth, setStrokeDashArray, selectedObjects});
         }
 
         return undefined
-    }, [canvas, fillColor, strokeColor, strokeWidth]);
+    }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray]);
 
     const init = useCallback(({
         initialCanvas,
