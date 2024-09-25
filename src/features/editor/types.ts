@@ -103,6 +103,8 @@ export type BuildEditorProps = {
 
 export interface Editor {
     canvas: fabric.Canvas;
+    bringForward: () => void;
+    sendBackwards: () => void;
     addCircle: () => void;
     addSoftRectangle: () => void;
     addRectangle: () => void;
