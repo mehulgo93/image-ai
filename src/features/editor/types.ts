@@ -105,6 +105,8 @@ export interface Editor {
     canvas: fabric.Canvas;
     bringForward: () => void;
     sendBackwards: () => void;
+    changeOpacity: (value: number) => void;
+    getActiveOpacity: () => number;
     addCircle: () => void;
     addSoftRectangle: () => void;
     addRectangle: () => void;
