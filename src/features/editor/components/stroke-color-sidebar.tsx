@@ -32,7 +32,7 @@ export const StrokeColorSidebar = ({
       )}
     >
       <ToolSidebarHeader
-        title="Fill Color"
+        title="Stroke Color"
         description="Add stroke color to your canvas"
       />
       <ScrollArea>

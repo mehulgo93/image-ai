@@ -25,7 +25,7 @@ export const useCanvasEvents = ({canvas, container, setSelectedObjects, clearSel
         }
         return () => {
             if (canvas) {
-                canvas.off("selection:cleared");
+                canvas.off("selection:creared");
                 canvas.off("selection:updated");
                 canvas.off("selection:cleared");
             }
