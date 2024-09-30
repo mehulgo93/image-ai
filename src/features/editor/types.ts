@@ -1,4 +1,4 @@
-import { fabric } from "fabric";
+import {fabric} from "fabric";
 import { ITextboxOptions } from "fabric/fabric-impl";
 import * as material from "material-colors";
 

@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActiveTool, Editor } from "@/features/editor/types";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
-import { Button } from "@/components/ui/button";
 
 interface TextSidebarProps {
   editor: Editor | undefined;
@@ -19,20 +19,18 @@ export const TextSidebar = ({
   const onClose = () => {
     onChangeActiveTool("select");
   };
+
   return (
     <aside
       className={cn(
-        "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
+        "bg-white relative border-r z-[40] w-[400px] h-full flex flex-col",
         activeTool === "text" ? "visible" : "hidden"
       )}
     >
       <ToolSidebarHeader title="Text" description="Add text to your canvas" />
       <ScrollArea>
         <div className="p-4 space-y-4 border-b">
-          <Button
-            className="w-full "
-            onClick={() => editor?.addText("Textbox")}
-          >
+          <Button className="w-full" onClick={() => editor?.addText("Textbox")}>
             Add a textbox
           </Button>
           <Button
@@ -59,7 +57,7 @@ export const TextSidebar = ({
               })
             }
           >
-            <span className="text-2xl font-semibold">Add a subheading</span>
+            <span className="text-xl font-semibold">Add a subheading</span>
           </Button>
           <Button
             className="w-full h-16"

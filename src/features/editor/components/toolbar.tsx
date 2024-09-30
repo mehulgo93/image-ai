@@ -23,9 +23,11 @@ export const Toolbar = ({
   const fillColor = editor?.getActiveFillColor();
   const strokeColor = editor?.getActiveStrokeColor();
 
-  const selectedObjectType = editor?.selectedObjects[0]?.type;
+  const selectedObjectType = editor?.selectedObjects[0];
 
-  const isText = isTextType(selectedObjectType);
+  const isText = isTextType(selectedObjectType?.type);
+
+  console.log("is Text", isText);
 
   if (editor?.selectedObjects.length === 0) {
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2" />;
