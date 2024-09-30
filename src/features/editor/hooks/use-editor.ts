@@ -52,11 +52,12 @@ const buildEditor = ({
         canvas.setActiveObject(object);
     }
     return {
-        addText: () => {
-            const object = new fabric.Textbox("Hello", {
+        addText: (value, options) => {
+            const object = new fabric.Textbox(value, {
                 ...TEXT_OPTIONS,
                 fill: fillColor,
-            })
+                ...options,
+            });
             addToCanvas(object);
         },
         getActiveOpacity: () => {

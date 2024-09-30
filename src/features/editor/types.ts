@@ -1,4 +1,5 @@
 import { fabric } from "fabric";
+import { ITextboxOptions } from "fabric/fabric-impl";
 import * as material from "material-colors";
 
 
@@ -42,8 +43,8 @@ export const FILL_COLOR = "rgba(0, 0, 0, 1)";
 export const STROKE_COLOR = "rgba(0, 0, 0, 1)";
 export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = []
-export const FONT_FAMILY = "Arial";
-export const FONT_SIZE = 32;
+export const FONT_FAMILY = "Arial"
+export const FONT_SIZE = 32
 
 export const TEXT_OPTIONS = {
     type: "textbox",
@@ -113,27 +114,62 @@ export type BuildEditorProps = {
 }
 
 export interface Editor {
-    canvas: fabric.Canvas;
+    savePng: () => void;
+    saveJpg: () => void;
+    saveSvg: () => void;
+    saveJson: () => void;
+    loadJson: (json: string) => void;
+    onUndo: () => void;
+    onRedo: () => void;
+    canUndo: () => boolean;
+    canRedo: () => boolean;
+    autoZoom: () => void;
+    zoomIn: () => void;
+    zoomOut: () => void;
+    getWorkspace: () => fabric.Object | undefined;
+    changeBackground: (value: string) => void;
+    changeSize: (value: { width: number; height: number }) => void;
+    enableDrawingMode: () => void;
+    disableDrawingMode: () => void;
+    onCopy: () => void;
+    onPaste: () => void;
+    changeImageFilter: (value: string) => void;
+    addImage: (value: string) => void;
+    delete: () => void;
+    changeFontSize: (value: number) => void;
+    getActiveFontSize: () => number;
+    changeTextAlign: (value: string) => void;
+    getActiveTextAlign: () => string;
+    changeFontUnderline: (value: boolean) => void;
+    getActiveFontUnderline: () => boolean;
+    changeFontLinethrough: (value: boolean) => void;
+    getActiveFontLinethrough: () => boolean;
+    changeFontStyle: (value: string) => void;
+    getActiveFontStyle: () => string;
+    changeFontWeight: (value: number) => void;
+    getActiveFontWeight: () => number;
+    getActiveFontFamily: () => string;
+    changeFontFamily: (value: string) => void;
+    addText: (value: string, options?: ITextboxOptions) => void;
+    getActiveOpacity: () => number;
+    changeOpacity: (value: number) => void;
     bringForward: () => void;
     sendBackwards: () => void;
-    addText: () => void;
-    changeOpacity: (value: number) => void;
-    getActiveOpacity: () => number;
+    changeStrokeWidth: (value: number) => void;
+    changeFillColor: (value: string) => void;
+    changeStrokeColor: (value: string) => void;
+    changeStrokeDashArray: (value: number[]) => void;
     addCircle: () => void;
     addSoftRectangle: () => void;
     addRectangle: () => void;
     addTriangle: () => void;
     addInverseTriangle: () => void;
     addDiamond: () => void;
-    changeFillColor: (value: string) => void;
-    changeStrokeWidth: (value: number) => void;
-    changeStrokeColor: (value: string) => void;
-    changeStrokeDashArray:(value: number[]) => void;
+    canvas: fabric.Canvas;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
-
     selectedObjects: fabric.Object[];
-    
-}
+  };
+  
