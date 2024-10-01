@@ -299,7 +299,6 @@ export const useEditor = ({
   useCanvasEvents({
     canvas,
     setSelectedObjects,
-    clearSelectionCallback,
   });
 
 
