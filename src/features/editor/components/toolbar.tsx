@@ -10,7 +10,7 @@ import { isTextType } from "@/features/editor/utils";
 import { ActiveTool, Editor } from "@/features/editor/types";
 
 interface ToolbarProps {
-  editor: Editor | undefined;
+  editor: Editor;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }

@@ -114,6 +114,7 @@ export type BuildEditorProps = {
 }
 
 export interface Editor {
+    selectedObjects: fabric.Object[];
     addText: (value: string, options?: ITextboxOptions) => void;
     getWorkspace: () => fabric.Object | undefined;
     getActiveOpacity: () => number;
@@ -135,6 +136,5 @@ export interface Editor {
     getActiveStrokeColor: () => string;
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
-    selectedObjects: fabric.Object[];
   };
   
