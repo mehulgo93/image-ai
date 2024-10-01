@@ -1,13 +1,15 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { FaBold } from "react-icons/fa6";
 import { Hint } from "@/components/hint";
 import { BsBorderWidth } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
-import { ArrowUp, ArrowDown, ChevronDown } from "lucide-react";
 import { RxTransparencyGrid } from "react-icons/rx";
 import { isTextType } from "@/features/editor/utils";
-import { ActiveTool, Editor } from "@/features/editor/types";
+import { ActiveTool, Editor, FONT_WEIGHT } from "@/features/editor/types";
+import { ArrowUp, ArrowDown, ChevronDown } from "lucide-react";
 
 interface ToolbarProps {
   editor: Editor;
@@ -23,9 +25,29 @@ export const Toolbar = ({
   const fillColor = editor?.getActiveFillColor();
   const strokeColor = editor?.getActiveStrokeColor();
   const fontFamily = editor?.getActiveFontFamily();
+  const initialFontWeight = editor?.getActiveFontWeight() || FONT_WEIGHT;
+  const [properties, setProperties] = useState({
+    fontWeight: initialFontWeight,
+  });
 
   const selectedObjectType = editor?.selectedObjects[0]?.type;
   const isText = isTextType(selectedObjectType);
+
+  const toggleBold = () => {
+    const selectedObject = editor?.selectedObjects[0];
+
+    if (!selectedObject) {
+      return;
+    }
+
+    const newValue = properties.fontWeight > 500 ? 500 : 700;
+
+    editor?.changeFontWeight(newValue);
+    setProperties((current) => ({
+      ...current,
+      fontWeight: newValue,
+    }));
+  };
 
   if (editor?.selectedObjects.length === 0) {
     return (
@@ -95,6 +117,20 @@ export const Toolbar = ({
             >
               <div className="max-w-[100px] truncate">{fontFamily}</div>
               <ChevronDown className="size-4 ml-2 shrink-0" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Bold" side="bottom" sideoffset={5}>
+            <Button
+              onClick={toggleBold}
+              size="icon"
+              variant="ghost"
+              className={cn(properties.fontWeight > 500, "bg-gray-100")}
+            >
+              <FaBold className="size-4 " />
             </Button>
           </Hint>
         </div>

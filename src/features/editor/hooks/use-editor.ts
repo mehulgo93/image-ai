@@ -15,6 +15,7 @@ import {
   STROKE_DASH_ARRAY,
   TEXT_OPTIONS,
   FONT_FAMILY,
+  FONT_WEIGHT,
 } from "@/features/editor/types";
 import { 
   isTextType,
@@ -81,6 +82,16 @@ const buildEditor = ({
 
       return value;
     },
+    changeFontWeight: (value: number) => {
+        canvas.getActiveObjects().forEach((object) => {
+            if (isTextType(object.type)) {
+                //@ts-ignore
+                //Faulty TS library fontWeight exists
+          object.set({ fontWeight: value });
+            }
+        });
+        canvas.renderAll();
+      },
     changeOpacity: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         object.set({ opacity: value });
@@ -249,6 +260,18 @@ const buildEditor = ({
         //@ts-ignore
         //Faulty TS library, fontFamily exisits.
         const value = selectedObject.get("fontFamily") || fontFamily;
+  
+        // Currently, gradients & patterns are not supported
+        return value
+      },
+      getActiveFontWeight: () => {
+        const selectedObject = selectedObjects[0];
+  
+        if (!selectedObject) {
+          return FONT_WEIGHT;
+        }
+       //@ts-ignore
+        const value = selectedObject.get("fontWeight") || FONT_WEIGHT;
   
         // Currently, gradients & patterns are not supported
         return value

@@ -68,6 +68,7 @@ export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = []
 export const FONT_FAMILY = "Arial"
 export const FONT_SIZE = 32
+export const FONT_WEIGHT = 400;
 
 export const TEXT_OPTIONS = {
     type: "textbox",
@@ -163,5 +164,7 @@ export interface Editor {
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
     changeFontFamily: (value: string) => void;
+    getActiveFontWeight: () => number;
+    changeFontWeight: (value: number) => void;
   };
   
