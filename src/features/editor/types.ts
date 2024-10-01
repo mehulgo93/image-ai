@@ -115,6 +115,7 @@ export type BuildEditorProps = {
 
 export interface Editor {
     addText: (value: string, options?: ITextboxOptions) => void;
+    getWorkspace: () => fabric.Object | undefined;
     getActiveOpacity: () => number;
     changeOpacity: (value: number) => void;
     bringForward: () => void;

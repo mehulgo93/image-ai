@@ -52,6 +52,7 @@ const buildEditor = ({
         canvas.setActiveObject(object);
     }
     return {
+        getWorkspace,
         addText: (value, options) => {
             const object = new fabric.Textbox(value, {
                 ...TEXT_OPTIONS,
@@ -276,7 +277,6 @@ export const useEditor = ({
 
     useCanvasEvents({
         canvas,
-        container,
         setSelectedObjects,
         clearSelectionCallback
     });
@@ -286,8 +286,8 @@ export const useEditor = ({
             return buildEditor({canvas, fillColor, strokeColor, strokeDashArray, strokeWidth, setFillColor, setStrokeColor, setStrokeWidth, setStrokeDashArray, selectedObjects});
         }
 
-        return undefined
-    }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray]);
+        return undefined;
+    }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
 
     const init = useCallback(({
         initialCanvas,
