@@ -26,6 +26,7 @@ export const Toolbar = ({
   const strokeColor = editor?.getActiveStrokeColor();
   const fontFamily = editor?.getActiveFontFamily();
   const initialFontWeight = editor?.getActiveFontWeight() || FONT_WEIGHT;
+
   const [properties, setProperties] = useState({
     fontWeight: initialFontWeight,
   });
@@ -128,7 +129,7 @@ export const Toolbar = ({
               onClick={toggleBold}
               size="icon"
               variant="ghost"
-              className={cn(properties.fontWeight > 500, "bg-gray-100")}
+              className={cn(properties.fontWeight > 500 && "bg-gray-100")}
             >
               <FaBold className="size-4 " />
             </Button>
