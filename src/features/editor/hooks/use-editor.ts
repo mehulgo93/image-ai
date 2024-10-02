@@ -16,6 +16,7 @@ import {
   TEXT_OPTIONS,
   FONT_FAMILY,
   FONT_WEIGHT,
+  FONT_SIZE,
 } from "@/features/editor/types";
 import { 
   isTextType,
@@ -158,6 +159,29 @@ const buildEditor = ({
         const value = selectedObject.get("textAlign") || "left";
 
          return value;
+      },
+      changeFontSize: (value: number) => {
+        canvas.getActiveObjects().forEach((object) => {
+            if (isTextType(object.type)) {
+                //@ts-ignore
+                //Faulty TS library fontSize exists
+          object.set({ fontSize: value });
+            }
+        });
+        canvas.renderAll();
+      },
+      getActiveFontSize: () => {
+        const selectedObject = selectedObjects[0];
+
+        if (!selectedObject) {
+            return FONT_SIZE
+        }
+        //@ts-ignore
+        //Faulty TS library fontSize exists
+        const value = selectedObject.get("fontSize") || FONT_SIZE;
+
+         return value;
+
       },
     changeFontWeight: (value: number) => {
         canvas.getActiveObjects().forEach((object) => {

@@ -174,5 +174,7 @@ export interface Editor {
     getActiveFontUnderline: () => boolean;
     changeTextAlign: (value: string) => void;
     getActiveTextAlign: () => string;
+    changeFontSize: (value: number) => void;
+    getActiveFontSize: () => number;
   };
   
