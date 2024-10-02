@@ -22,6 +22,7 @@ import {
 } from "@/features/editor/utils";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
+import { ITextboxOptions } from "fabric/fabric-impl";
 
 const buildEditor = ({
   canvas,
@@ -133,6 +134,28 @@ const buildEditor = ({
         //@ts-ignore
         //Faulty TS library underline exists
         const value = selectedObject.get("underline") || false;
+
+         return value;
+      },
+      changeTextAlign: (value: string) => {
+        canvas.getActiveObjects().forEach((object) => {
+            if (isTextType(object.type)) {
+                //@ts-ignore
+                //Faulty TS library textAlign exists
+          object.set({ textAlign: value });
+            }
+        });
+        canvas.renderAll();
+      },
+      getActiveTextAlign: () => {
+        const selectedObject = selectedObjects[0];
+
+        if (!selectedObject) {
+            return "left";
+        }
+        //@ts-ignore
+        //Faulty TS library underline exists
+        const value = selectedObject.get("textAlign") || "left";
 
          return value;
       },

@@ -172,5 +172,7 @@ export interface Editor {
     getActiveFontLinethrough: () => boolean;
     changeFontUnderline: (value: boolean) => void;
     getActiveFontUnderline: () => boolean;
+    changeTextAlign: (value: string) => void;
+    getActiveTextAlign: () => string;
   };
   
