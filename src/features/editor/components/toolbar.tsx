@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Hint } from "@/components/hint";
 import { BsBorderWidth } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import {
   AlignLeft,
   AlignCenter,
   AlignRight,
+  Trash,
 } from "lucide-react";
 import {
   ActiveTool,
@@ -353,6 +355,20 @@ export const Toolbar = ({
             className={cn(activeTool === "opacity" && "bg-gray-100")}
           >
             <RxTransparencyGrid className="size-4 " />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Delete" side="bottom" sideoffset={5}>
+          <Button
+            onClick={() => {
+              editor?.delete();
+              toast.success("Deleted Successfully");
+            }}
+            size="icon"
+            variant="ghost"
+          >
+            <Trash className="size-4 " />
           </Button>
         </Hint>
       </div>

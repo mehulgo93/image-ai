@@ -63,6 +63,13 @@ const buildEditor = ({
   };
 
   return {
+    delete: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.remove(object);
+      });
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    },
     getWorkspace,
     addText: (value, options) => {
       const object = new fabric.Textbox(value, {

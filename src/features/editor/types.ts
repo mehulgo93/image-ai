@@ -176,5 +176,6 @@ export interface Editor {
     getActiveTextAlign: () => string;
     changeFontSize: (value: number) => void;
     getActiveFontSize: () => number;
+    delete: () => void;
   };
   
