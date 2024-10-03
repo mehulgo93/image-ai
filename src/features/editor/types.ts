@@ -177,5 +177,6 @@ export interface Editor {
     changeFontSize: (value: number) => void;
     getActiveFontSize: () => number;
     delete: () => void;
+    addImage: (value: string) => void;
   };
   
