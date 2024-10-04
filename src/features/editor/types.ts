@@ -2,6 +2,31 @@ import {fabric} from "fabric";
 import { ITextboxOptions } from "fabric/fabric-impl";
 import * as material from "material-colors";
 
+export const filters = [
+    "none",
+    "polaroid",
+    "sepia",
+    "kodachrome",
+    "contrast",
+    "brightness",
+    "greyscale",
+    "brownie",
+    "vintage",
+    "technicolor",
+    "pixelate",
+    "invert",
+    "blur",
+    "sharpen",
+    "emboss",
+    "removecolor",
+    "blacknwhite",
+    "vibrance",
+    "blendcolor",
+    "huerotate",
+    "resize",
+    "saturation",
+    "gamma",
+  ];
 
 
 export const fonts = [
@@ -69,6 +94,7 @@ export const STROKE_DASH_ARRAY = []
 export const FONT_FAMILY = "Arial"
 export const FONT_SIZE = 32
 export const FONT_WEIGHT = 400;
+export const BRIGHTNESS = 50;
 
 export const TEXT_OPTIONS = {
     type: "textbox",
@@ -178,5 +204,7 @@ export interface Editor {
     getActiveFontSize: () => number;
     delete: () => void;
     addImage: (value: string) => void;
+    changeImageFilter: (value: string) => void;
+    changeImageBrightness: (value: number) => void;
   };
   

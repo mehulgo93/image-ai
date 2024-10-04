@@ -17,13 +17,14 @@ import {
   FONT_FAMILY,
   FONT_WEIGHT,
   FONT_SIZE,
+  BRIGHTNESS,
 } from "@/features/editor/types";
 import { 
+  createFilter,
   isTextType,
 } from "@/features/editor/utils";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
-import { ITextboxOptions } from "fabric/fabric-impl";
 
 const buildEditor = ({
   canvas,
@@ -63,6 +64,53 @@ const buildEditor = ({
   };
 
   return {
+    changeImageBrightness: (value: number) => {
+      const objects = canvas.getActiveObjects();
+      objects.forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.Image;
+
+          // Ensure filters array exists
+          imageObject.filters = imageObject.filters || [];
+
+          // Find existing brightness filter
+          let brightnessFilter = imageObject.filters.find(
+            //@ts-ignore
+            (filter) => filter.type === "Brightness"
+            //@ts-ignore
+          ) as fabric.Image.filters.Brightness;
+
+          if (brightnessFilter) {
+            // Update the brightness value
+            brightnessFilter.brightness = value;
+          } else {
+            // Create a new brightness filter
+            brightnessFilter = new fabric.Image.filters.Brightness({
+              brightness: value,
+            });
+            imageObject.filters.push(brightnessFilter);
+          }
+
+          // Apply filters and re-render the canvas
+          imageObject.applyFilters();
+          canvas.requestRenderAll();
+        }
+      });
+    },
+    changeImageFilter: (value: string) => {
+      const objects = canvas.getActiveObjects();
+      objects.forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.Image;
+
+          const effect = createFilter(value);
+          imageObject.filters = effect ? [effect] : [];
+          imageObject.applyFilters();
+          canvas.renderAll();
+
+        }
+      })
+    },
     addImage: (value: string) => {
       fabric.Image.fromURL(
         value, 
