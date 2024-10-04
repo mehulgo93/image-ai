@@ -64,6 +64,40 @@ const buildEditor = ({
   };
 
   return {
+    changeImageContrast: (value: number) => {
+      const objects = canvas.getActiveObjects();
+      objects.forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.Image;
+
+          // Ensure filters array exists
+          imageObject.filters = imageObject.filters || [];
+
+          // Find existing contrast filter
+          let contrastFilter = imageObject.filters.find(
+            //@ts-ignore
+            (filter) => filter.type === "Contrast"
+          ) as fabric.IBaseFilter;
+
+          if (contrastFilter) {
+            // Update the contrast value
+            //@ts-ignore
+            contrastFilter.contrast = value;
+          } else {
+            // Create a new contrast filter
+            // @ts-ignore
+            const newContrastFilter = new fabric.Image.filters.Contrast({
+              contrast: value,
+            });
+            imageObject.filters.push(newContrastFilter);
+          }
+
+          // Apply filters and re-render the canvas
+          imageObject.applyFilters();
+          canvas.requestRenderAll();
+        }
+      });
+    },
     changeImageBrightness: (value: number) => {
       const objects = canvas.getActiveObjects();
       objects.forEach((object) => {

@@ -206,5 +206,6 @@ export interface Editor {
     addImage: (value: string) => void;
     changeImageFilter: (value: string) => void;
     changeImageBrightness: (value: number) => void;
+    changeImageContrast: (value: number) => void;
   };
   

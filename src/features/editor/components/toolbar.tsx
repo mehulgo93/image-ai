@@ -7,6 +7,7 @@ import { Hint } from "@/components/hint";
 import { TbColorFilter } from "react-icons/tb";
 import { BsBorderWidth } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
+import * as Popover from "@radix-ui/react-popover";
 import { RxTransparencyGrid } from "react-icons/rx";
 import { isTextType } from "@/features/editor/utils";
 import {
@@ -17,6 +18,8 @@ import {
   AlignCenter,
   AlignRight,
   Trash,
+  Sun,
+  Contrast as ContrastIcon,
 } from "lucide-react";
 import {
   ActiveTool,
@@ -48,6 +51,10 @@ export const Toolbar = ({
   const initialTextAlign = editor?.getActiveTextAlign();
   const initialFontSize = editor?.getActiveFontSize() || FONT_SIZE;
   const initialBrightness = 0;
+  const initialContrast = 0;
+
+  const [isBrightnessOpen, setIsBrightnessOpen] = useState(false);
+  const [isContrastOpen, setIsContrastOpen] = useState(false);
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
@@ -60,12 +67,27 @@ export const Toolbar = ({
     textAlign: initialTextAlign,
     fontSize: initialFontSize,
     brightness: initialBrightness,
+    contrast: initialContrast,
   });
 
   const selectedObjectType = editor?.selectedObjects[0]?.type;
   const selectedObject = editor?.selectedObjects[0];
   const isText = isTextType(selectedObjectType);
   const isImage = selectedObjectType === "image";
+
+  const onChangeContrast = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(event.target.value);
+    if (!selectedObject) {
+      return;
+    }
+
+    editor?.changeImageContrast(value);
+
+    setProperties((current) => ({
+      ...current,
+      contrast: value,
+    }));
+  };
 
   const onChangeBrightness = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
@@ -172,7 +194,7 @@ export const Toolbar = ({
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
       {!isImage && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Color" side="bottom" sideoffset={5}>
+          <Hint label="Color" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeActiveTool("fill")}
               size="icon"
@@ -189,7 +211,7 @@ export const Toolbar = ({
       )}
       {!isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Stroke Color" side="bottom" sideoffset={5}>
+          <Hint label="Stroke Color" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeActiveTool("stroke-color")}
               size="icon"
@@ -206,7 +228,7 @@ export const Toolbar = ({
       )}
       {!isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Stroke Width" side="bottom" sideoffset={5}>
+          <Hint label="Stroke Width" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeActiveTool("stroke-width")}
               size="icon"
@@ -220,7 +242,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Font" side="bottom" sideoffset={5}>
+          <Hint label="Font" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeActiveTool("font")}
               size="icon"
@@ -240,7 +262,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Bold" side="bottom" sideoffset={5}>
+          <Hint label="Bold" side="top" sideoffset={5}>
             <Button
               onClick={toggleBold}
               size="icon"
@@ -254,7 +276,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Italic" side="bottom" sideoffset={5}>
+          <Hint label="Italic" side="top" sideoffset={5}>
             <Button
               onClick={toggleItalic}
               size="icon"
@@ -268,7 +290,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Underline" side="bottom" sideoffset={5}>
+          <Hint label="Underline" side="top" sideoffset={5}>
             <Button
               onClick={toggleLineUnderline}
               size="icon"
@@ -282,7 +304,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="strike" side="bottom" sideoffset={5}>
+          <Hint label="strike" side="top" sideoffset={5}>
             <Button
               onClick={toggleLinethrough}
               size="icon"
@@ -296,7 +318,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Align Left" side="bottom" sideoffset={5}>
+          <Hint label="Align Left" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeTextAlign("left")}
               size="icon"
@@ -310,7 +332,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Align Center" side="bottom" sideoffset={5}>
+          <Hint label="Align Center" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeTextAlign("center")}
               size="icon"
@@ -324,7 +346,7 @@ export const Toolbar = ({
       )}
       {isText && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Align Right" side="bottom" sideoffset={5}>
+          <Hint label="Align Right" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeTextAlign("right")}
               size="icon"
@@ -338,7 +360,7 @@ export const Toolbar = ({
       )}
       {isImage && (
         <div className="flex items-center h-full justify-center">
-          <Hint label="Filters" side="bottom" sideoffset={5}>
+          <Hint label="Filters" side="top" sideoffset={5}>
             <Button
               onClick={() => onChangeActiveTool("filter")}
               size="icon"
@@ -359,22 +381,74 @@ export const Toolbar = ({
         </div>
       )}
       {isImage && (
-        <div className="flex items-center h-full justify-center">
-          <Hint label="Brightness" side="bottom" sideoffset={5}>
-            <input
-              type="range"
-              min="-1"
-              max="1"
-              step="0.01"
-              value={properties.brightness}
-              onChange={onChangeBrightness}
-              className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-            />
-          </Hint>
+        <div className="relative flex items-center h-full justify-center">
+          <Popover.Root
+            open={isBrightnessOpen}
+            onOpenChange={setIsBrightnessOpen}
+          >
+            <Hint label="Brightness" side="top" sideoffset={5}>
+              <Popover.Trigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={cn(isBrightnessOpen && "bg-gray-100")}
+                >
+                  <Sun className="size-4" />
+                </Button>
+              </Popover.Trigger>
+            </Hint>
+            <Popover.Content
+              side="bottom"
+              align="center"
+              className="p-2 bg-white rounded shadow"
+            >
+              <input
+                type="range"
+                min="-1"
+                max="1"
+                step="0.01"
+                value={properties.brightness}
+                onChange={onChangeBrightness}
+                className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </Popover.Content>
+          </Popover.Root>
+        </div>
+      )}
+      {isImage && (
+        <div className="relative flex items-center h-full justify-center">
+          <Popover.Root open={isContrastOpen} onOpenChange={setIsContrastOpen}>
+            <Hint label="Contrast" side="top" sideoffset={5}>
+              <Popover.Trigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={cn(isContrastOpen && "bg-gray-100")}
+                >
+                  <ContrastIcon className="size-4" />
+                </Button>
+              </Popover.Trigger>
+            </Hint>
+            <Popover.Content
+              side="bottom"
+              align="center"
+              className="p-2 bg-white rounded shadow"
+            >
+              <input
+                type="range"
+                min="-1"
+                max="1"
+                step="0.01"
+                value={properties.contrast}
+                onChange={onChangeContrast}
+                className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </Popover.Content>
+          </Popover.Root>
         </div>
       )}
       <div className="flex items-center h-full justify-center">
-        <Hint label="Bring Forward" side="bottom" sideoffset={5}>
+        <Hint label="Bring Forward" side="top" sideoffset={5}>
           <Button
             onClick={() => editor?.bringForward()}
             size="icon"
@@ -385,7 +459,7 @@ export const Toolbar = ({
         </Hint>
       </div>
       <div className="flex items-center h-full justify-center">
-        <Hint label="Send Backwards" side="bottom" sideoffset={5}>
+        <Hint label="Send Backwards" side="top" sideoffset={5}>
           <Button
             onClick={() => editor?.sendBackwards()}
             size="icon"
@@ -396,7 +470,7 @@ export const Toolbar = ({
         </Hint>
       </div>
       <div className="flex items-center h-full justify-center">
-        <Hint label="Opacity" side="bottom" sideoffset={5}>
+        <Hint label="Opacity" side="top" sideoffset={5}>
           <Button
             onClick={() => onChangeActiveTool("opacity")}
             size="icon"
@@ -408,7 +482,7 @@ export const Toolbar = ({
         </Hint>
       </div>
       <div className="flex items-center h-full justify-center">
-        <Hint label="Delete" side="bottom" sideoffset={5}>
+        <Hint label="Delete" side="top" sideoffset={5}>
           <Button
             onClick={() => {
               editor?.delete();
