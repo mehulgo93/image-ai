@@ -20,7 +20,7 @@ const app = new Hono()
         image: image
       };
     
-      const output: unknown = await replicate.run("bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637", { input });
+      const output: unknown = await replicate.run("cjwbw/rembg:fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c003", { input });
 
       const res = output as string;
 
@@ -38,6 +38,8 @@ const app = new Hono()
     async (c) => {
       const { prompt } = c.req.valid("json");
 
+      console.log(prompt);
+
       const input = {
         cfg: 3.5,
         steps: 28,
@@ -49,7 +51,7 @@ const app = new Hono()
         prompt_strength: 0.85
       };
       
-      const output = await replicate.run("bytedance/sdxl-lightning-4step", { input });
+      const output = await replicate.run("stability-ai/stable-diffusion-3", { input });
       
       const res = output as Array<string>;
 

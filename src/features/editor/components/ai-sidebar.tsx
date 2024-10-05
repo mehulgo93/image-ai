@@ -26,7 +26,7 @@ export const AiSidebar = ({
     e.preventDefault();
 
     mutation.mutate(
-      { prompt: "" },
+      { prompt: value },
       {
         onSuccess: ({ data }) => {
           editor?.addImage(data);
@@ -48,15 +48,21 @@ export const AiSidebar = ({
     >
       <ToolSidebarHeader title="AI" description="Generate Image using AI" />
       <ScrollArea>
-        <form className="p-4 space-y-6">
+        <form onSubmit={onSubmit} className="p-4 space-y-6">
           <Textarea
+            disabled={mutation.isPending}
             placeholder="self-portrait of a woman, lightning in the background"
             cols={30}
             rows={10}
             minLength={3}
+            value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Button type="submit" className="w-full ">
+          <Button
+            disabled={mutation.isPending}
+            type="submit"
+            className="w-full "
+          >
             Generate
           </Button>
         </form>
