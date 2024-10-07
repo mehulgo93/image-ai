@@ -1,8 +1,13 @@
 import { Hint } from "@/components/hint";
 import { ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Editor } from "@/features/editor/types";
 
-export const Footer = () => {
+interface FooterProps {
+  editor: Editor | undefined;
+}
+
+export const Footer = ({ editor }: FooterProps) => {
   return (
     <footer className="h-[52px] border-t bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-1 shrink-0 px-4 flex-row-reverse">
       <Hint label="Zoom in" side="top" sideoffset={10}>
@@ -10,7 +15,7 @@ export const Footer = () => {
           variant="ghost"
           className="h-full"
           size="icon"
-          onClick={() => {}}
+          onClick={() => editor?.zoomIn()}
         >
           <ZoomIn className="size-4" />
         </Button>
@@ -20,7 +25,7 @@ export const Footer = () => {
           variant="ghost"
           className="h-full"
           size="icon"
-          onClick={() => {}}
+          onClick={() => editor?.zoomOut()}
         >
           <ZoomOut className="size-4" />
         </Button>

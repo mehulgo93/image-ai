@@ -216,8 +216,8 @@ export interface Editor {
     disableDrawingMode: () => void;
     changeBackground:(value: string) => void;
     changeSize: (value: {width: number, height: number}) => void;
-    zoomIn: (value: number) => void;
-    zoomOut: (value: number) => void;
+    zoomIn: () => void;
+    zoomOut: () => void;
     autoZoom: () => void;
   };
   
