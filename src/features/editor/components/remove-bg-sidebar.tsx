@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -8,17 +9,17 @@ import { useGenerateImage } from "@/features/ai/api/use-generate-image";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
 
-interface AiSidebarProps {
+interface RemoveBgSidebarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-export const AiSidebar = ({
+export const RemoveBgSidebar = ({
   editor,
   activeTool,
   onChangeActiveTool,
-}: AiSidebarProps) => {
+}: RemoveBgSidebarProps) => {
   const mutation = useGenerateImage();
   const [value, setValue] = useState("");
 
@@ -44,10 +45,13 @@ export const AiSidebar = ({
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "ai" ? "visible" : "hidden"
+        activeTool === "remove-bg" ? "visible" : "hidden"
       )}
     >
-      <ToolSidebarHeader title="AI" description="Generate Image using AI" />
+      <ToolSidebarHeader
+        title="Background removal"
+        description="Remove background from image using AI"
+      />
       <ScrollArea>
         <form onSubmit={onSubmit} className="p-4 space-y-6">
           <Textarea
