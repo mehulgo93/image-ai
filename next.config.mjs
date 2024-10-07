@@ -9,6 +9,10 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "replicate.delivery",
+            },
+            {
+                protocol: "https",
+                hostname: "utfs.io",
             }
         ]
     }

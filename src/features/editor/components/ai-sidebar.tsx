@@ -7,6 +7,7 @@ import { ActiveTool, Editor } from "@/features/editor/types";
 import { useGenerateImage } from "@/features/ai/api/use-generate-image";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
+import { toast } from "react-hot-toast";
 
 interface AiSidebarProps {
   editor: Editor | undefined;
@@ -30,6 +31,7 @@ export const AiSidebar = ({
       {
         onSuccess: ({ data }) => {
           editor?.addImage(data);
+          toast.success("Image Generated Successfully");
           setValue("");
         },
       }
@@ -49,24 +51,35 @@ export const AiSidebar = ({
     >
       <ToolSidebarHeader title="AI" description="Generate Image using AI" />
       <ScrollArea>
-        <form onSubmit={onSubmit} className="p-4 space-y-6">
-          <Textarea
-            disabled={mutation.isPending}
-            placeholder="self-portrait of a woman, lightning in the background"
-            cols={30}
-            rows={10}
-            minLength={3}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <Button
-            disabled={mutation.isPending}
-            type="submit"
-            className="w-full "
+        <div className="relative">
+          {mutation.isPending && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-10">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+              <p className="text-white text-sm mt-2">Generating Image...</p>
+            </div>
+          )}
+          <form
+            onSubmit={onSubmit}
+            className={cn("p-4 space-y-6", mutation.isPending && "opacity-50")}
           >
-            Generate
-          </Button>
-        </form>
+            <Textarea
+              disabled={mutation.isPending}
+              placeholder="self-portrait of a woman, lightning in the background"
+              cols={30}
+              rows={10}
+              minLength={3}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <Button
+              disabled={mutation.isPending}
+              type="submit"
+              className="w-full"
+            >
+              {mutation.isPending ? "Generating..." : "Generate"}
+            </Button>
+          </form>
+        </div>
       </ScrollArea>
       <ToolSidebarClose onClick={onClose} />
     </aside>
