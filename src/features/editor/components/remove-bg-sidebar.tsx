@@ -1,11 +1,9 @@
 import Image from "next/image";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActiveTool, Editor } from "@/features/editor/types";
-import { useGenerateImage } from "@/features/ai/api/use-generate-image";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
 
@@ -20,23 +18,10 @@ export const RemoveBgSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: RemoveBgSidebarProps) => {
-  const mutation = useGenerateImage();
-  const [value, setValue] = useState("");
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    mutation.mutate(
-      { prompt: value },
-      {
-        onSuccess: ({ data }) => {
-          editor?.addImage(data);
-          setValue("");
-        },
-      }
-    );
-  };
-
+  const selectedObject = editor?.selectedObjects[0];
+  // check the entry on the console log of the selected object to find out the original element which contains the url of the image.
+  // @ts-ignore
+  const imageSrc = selectedObject?._originalElement?.currentSrc;
   const onClose = () => {
     onChangeActiveTool("select");
   };
@@ -52,26 +37,27 @@ export const RemoveBgSidebar = ({
         title="Background removal"
         description="Remove background from image using AI"
       />
-      <ScrollArea>
-        <form onSubmit={onSubmit} className="p-4 space-y-6">
-          <Textarea
-            disabled={mutation.isPending}
-            placeholder="self-portrait of a woman, lightning in the background"
-            cols={30}
-            rows={10}
-            minLength={3}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <Button
-            disabled={mutation.isPending}
-            type="submit"
-            className="w-full "
+      {!imageSrc && (
+        <div className="flex flex-col gap-y-4 items-center justify-center">
+          <AlertTriangle className="size-4 text-muted-foreground" />
+          <p className="text-muted-foreground text-xs">
+            Feature is not available for this object
+          </p>
+        </div>
+      )}
+      {imageSrc && (
+        <ScrollArea>
+          <div
+            className={cn(
+              "relative aspect-square rounded-md overflow-hidden transition bg-muted",
+              false && "opacity-50"
+            )}
           >
-            Generate
-          </Button>
-        </form>
-      </ScrollArea>
+            <Image src={imageSrc} fill alt="Image" className="object-cover" />
+          </div>
+          <Button>Remove background</Button>
+        </ScrollArea>
+      )}
       <ToolSidebarClose onClick={onClose} />
     </aside>
   );
