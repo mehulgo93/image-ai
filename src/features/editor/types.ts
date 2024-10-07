@@ -165,6 +165,7 @@ export type BuildEditorProps = {
     setStrokeDashArray: (value: number[]) => void;
     copy: () => void;
     paste: () => void;
+    autoZoom: () => void;
 }
 
 export interface Editor {
@@ -213,5 +214,7 @@ export interface Editor {
     OnPaste: () => void;
     enableDrawingMode: () => void;
     disableDrawingMode: () => void;
+    changeBackground:(value: string) => void;
+    changeSize: (value: {width: number, height: number}) => void;
   };
   

@@ -27,6 +27,7 @@ import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 
 const buildEditor = ({
+  autoZoom,
   canvas,
   fillColor,
   setFillColor,
@@ -66,6 +67,17 @@ const buildEditor = ({
   };
 
   return {
+    changeSize: (value: {width: number, height: number}) => {
+      const workspace = getWorkspace();
+
+      workspace?.set(value);
+      autoZoom();
+    },
+    changeBackground: (value: string) => {
+      const workspace = getWorkspace();
+      workspace?.set({fill: value});
+      canvas.renderAll()
+    },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
       canvas.renderAll()
@@ -575,7 +587,7 @@ export const useEditor = ({
 const {copy, paste} = useClipboard({canvas});
 
 
- useAutoResize({
+ const { autoZoom } = useAutoResize({
     canvas,
     container,
   });
@@ -589,6 +601,7 @@ const {copy, paste} = useClipboard({canvas});
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        autoZoom,
         canvas,
         fillColor,
         strokeWidth,
@@ -617,7 +630,8 @@ const {copy, paste} = useClipboard({canvas});
     strokeDashArray,
     fontFamily,
     copy,
-    paste
+    paste,
+    autoZoom,
   ]);
 
   const init = useCallback(
