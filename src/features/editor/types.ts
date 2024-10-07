@@ -211,5 +211,7 @@ export interface Editor {
     changeImageContrast: (value: number) => void;
     OnCopy: () => void;
     OnPaste: () => void;
+    enableDrawingMode: () => void;
+    disableDrawingMode: () => void;
   };
   
