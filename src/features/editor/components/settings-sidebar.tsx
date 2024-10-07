@@ -66,8 +66,8 @@ export const SettingsSidebar = ({
       )}
     >
       <ToolSidebarHeader
-        title="Fill color"
-        description="Add fill color to your element"
+        title="Settings"
+        description="change the look of your workspace"
       />
       <ScrollArea>
         <form className="space-y-4 p-4" onSubmit={onSubmit}>
