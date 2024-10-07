@@ -169,6 +169,7 @@ export type BuildEditorProps = {
 }
 
 export interface Editor {
+    canvas: fabric.Canvas;
     selectedObjects: fabric.Object[];
     addText: (value: string, options?: ITextboxOptions) => void;
     getWorkspace: () => fabric.Object | undefined;
@@ -186,7 +187,6 @@ export interface Editor {
     addTriangle: () => void;
     addInverseTriangle: () => void;
     addDiamond: () => void;
-    canvas: fabric.Canvas;
     getActiveFontFamily: () => string;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;
@@ -216,5 +216,8 @@ export interface Editor {
     disableDrawingMode: () => void;
     changeBackground:(value: string) => void;
     changeSize: (value: {width: number, height: number}) => void;
+    zoomIn: (value: number) => void;
+    zoomOut: (value: number) => void;
+    autoZoom: () => void;
   };
   
