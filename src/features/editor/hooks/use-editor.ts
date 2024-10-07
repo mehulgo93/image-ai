@@ -1,5 +1,5 @@
 import { fabric } from "fabric";
-import { useCallback, useState, useMemo, useRef } from "react";
+import { useCallback, useState, useMemo } from "react";
 
 import { 
   Editor, 
@@ -17,12 +17,12 @@ import {
   FONT_FAMILY,
   FONT_WEIGHT,
   FONT_SIZE,
-  BRIGHTNESS,
 } from "@/features/editor/types";
 import { 
   createFilter,
   isTextType,
 } from "@/features/editor/utils";
+import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 
@@ -39,6 +39,8 @@ const buildEditor = ({
   setStrokeDashArray,
   fontFamily, 
   setFontFamily,
+  copy,
+  paste
 }: BuildEditorProps): Editor => {
 
   const getWorkspace = () => {
@@ -64,6 +66,8 @@ const buildEditor = ({
   };
 
   return {
+    OnCopy: () => copy(),
+    OnPaste: () => paste(),
     changeImageContrast: (value: number) => {
       const objects = canvas.getActiveObjects();
       objects.forEach((object) => {
@@ -556,7 +560,7 @@ export const useEditor = ({
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
-
+const {copy, paste} = useClipboard({canvas});
 
 
  useAutoResize({
@@ -585,6 +589,8 @@ export const useEditor = ({
         setStrokeDashArray,
         fontFamily, 
         setFontFamily,
+        copy,
+        paste
       });
     }
 
@@ -598,6 +604,8 @@ export const useEditor = ({
     selectedObjects,
     strokeDashArray,
     fontFamily,
+    copy,
+    paste
   ]);
 
   const init = useCallback(

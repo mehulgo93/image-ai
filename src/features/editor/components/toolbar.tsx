@@ -21,6 +21,7 @@ import {
   Sun,
   Contrast as ContrastIcon,
   SquareSplitHorizontal,
+  Copy,
 } from "lucide-react";
 import {
   ActiveTool,
@@ -493,6 +494,21 @@ export const Toolbar = ({
             className={cn(activeTool === "opacity" && "bg-gray-100")}
           >
             <RxTransparencyGrid className="size-4 " />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Duplicate" side="top" sideoffset={5}>
+          <Button
+            onClick={() => {
+              editor?.OnCopy();
+              toast.success("Copied Successfully");
+              editor?.OnPaste();
+            }}
+            size="icon"
+            variant="ghost"
+          >
+            <Copy className="size-4 " />
           </Button>
         </Hint>
       </div>

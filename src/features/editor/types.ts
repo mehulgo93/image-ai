@@ -163,6 +163,8 @@ export type BuildEditorProps = {
     fontFamily: string;
     setFontFamily: (value: string) => void;
     setStrokeDashArray: (value: number[]) => void;
+    copy: () => void;
+    paste: () => void;
 }
 
 export interface Editor {
@@ -207,5 +209,7 @@ export interface Editor {
     changeImageFilter: (value: string) => void;
     changeImageBrightness: (value: number) => void;
     changeImageContrast: (value: number) => void;
+    OnCopy: () => void;
+    OnPaste: () => void;
   };
   
