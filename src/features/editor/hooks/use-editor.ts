@@ -605,11 +605,12 @@ export const useEditor = ({
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
+
+  const { save } = useHistory({canvas});
+
 const {copy, paste} = useClipboard({canvas});
 
-const { save } = useHistory();
-
- const { autoZoom } = useAutoResize({
+const { autoZoom } = useAutoResize({
     canvas,
     container,
   });
