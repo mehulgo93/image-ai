@@ -28,6 +28,7 @@ import { useHotkeys } from "@/features/editor/hooks/use-hotkeys";
 import { useHistory } from "@/features/editor/hooks/use-history";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
+import { useWindowEvents } from "@/features/editor/hooks/use-window-events";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 
 const buildEditor = ({
@@ -688,6 +689,8 @@ export const useEditor = ({
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
+
+  useWindowEvents();
 
   const { save,
       canRedo,
