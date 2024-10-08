@@ -18,16 +18,21 @@ import { Hint } from "@/components/hint";
 import { CiFileOn } from "react-icons/ci";
 import { BsCloudCheck } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
-import { ActiveTool } from "@/features/editor/types";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/features/editor/components/logo";
+import { ActiveTool, Editor } from "@/features/editor/types";
 
 interface NavbarProps {
+  editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
+export const Navbar = ({
+  editor,
+  activeTool,
+  onChangeActiveTool,
+}: NavbarProps) => {
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px] ">
       <Logo />
@@ -66,14 +71,22 @@ export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
           </Button>
         </Hint>
         <Hint label="Undo" side="bottom" sideoffset={10}>
-          <Button variant="ghost" size="icon" onClick={() => {}} className="">
-            {/* TODO: add functionality TODO: add dynamic class */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => editor?.onUndo()}
+            disabled={!editor?.canUndo()}
+          >
             <Undo2 className="size-4" />
           </Button>
         </Hint>
         <Hint label="Redo" side="bottom" sideoffset={10}>
-          <Button variant="ghost" size="icon" onClick={() => {}} className="">
-            {/* TODO: add functionality TODO: add dynamic class */}
+          <Button
+            variant="ghost"
+            size="icon"
+            disabled={!editor?.canRedo()}
+            onClick={() => editor?.onRedo()}
+          >
             <Redo2 className="size-4" />
           </Button>
         </Hint>

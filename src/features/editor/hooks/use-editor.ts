@@ -17,6 +17,7 @@ import {
   FONT_FAMILY,
   FONT_WEIGHT,
   FONT_SIZE,
+  JSON_KEYS,
 } from "@/features/editor/types";
 import { 
   createFilter,
@@ -42,7 +43,12 @@ const buildEditor = ({
   fontFamily, 
   setFontFamily,
   copy,
-  paste
+  paste,
+  save,
+  undo,
+  redo, 
+  canRedo,
+  canUndo,
 }: BuildEditorProps): Editor => {
 
   const getWorkspace = () => {
@@ -70,6 +76,8 @@ const buildEditor = ({
   return {
     save: () => {},
     autoZoom,
+    canUndo,
+    canRedo,
     zoomIn: () => {
       let zoomRatio = canvas.getZoom();
       zoomRatio += 0.05;
@@ -93,11 +101,13 @@ const buildEditor = ({
 
       workspace?.set(value);
       autoZoom();
+      save();
     },
     changeBackground: (value: string) => {
       const workspace = getWorkspace();
       workspace?.set({fill: value});
-      canvas.renderAll()
+      canvas.renderAll();
+      save();
     },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
@@ -109,6 +119,8 @@ const buildEditor = ({
     disableDrawingMode: () => {
       canvas.isDrawingMode = false;
     },
+    onUndo: () => undo(),
+    onRedo: () => redo(),
     OnCopy: () => copy(),
     OnPaste: () => paste(),
     changeImageContrast: (value: number) => {
@@ -606,7 +618,14 @@ export const useEditor = ({
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
 
-  const { save } = useHistory({canvas});
+  const { save,
+      canRedo,
+      canUndo,
+      undo,
+      redo,
+      canvasHistory,
+      setHistoryIndex
+      } = useHistory({canvas});
 
 const {copy, paste} = useClipboard({canvas});
 
@@ -625,6 +644,11 @@ const { autoZoom } = useAutoResize({
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        save,
+        undo,
+        redo,
+        canUndo,
+        canRedo,
         autoZoom,
         canvas,
         fillColor,
@@ -656,6 +680,11 @@ const { autoZoom } = useAutoResize({
     copy,
     paste,
     autoZoom,
+    canRedo,
+    canUndo,
+    redo, 
+    undo,
+    save,
   ]);
 
   const init = useCallback(
@@ -698,7 +727,15 @@ const { autoZoom } = useAutoResize({
 
       setCanvas(initialCanvas);
       setContainer(initialContainer);
-    },[]);
+
+      const currentState = JSON.stringify(
+        initialCanvas.toJSON(JSON_KEYS)
+      );
+      canvasHistory.current = [currentState];
+      setHistoryIndex(0);
+      // No need for this in the dependencies array because we got them from the book use-history
+    },[canvasHistory, setHistoryIndex]); 
+
 
   return { init, editor };
 };
