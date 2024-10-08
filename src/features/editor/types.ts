@@ -219,5 +219,6 @@ export interface Editor {
     zoomIn: () => void;
     zoomOut: () => void;
     autoZoom: () => void;
+    save: () => void;
   };
   

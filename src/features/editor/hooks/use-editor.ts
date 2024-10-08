@@ -22,6 +22,7 @@ import {
   createFilter,
   isTextType,
 } from "@/features/editor/utils";
+import { useHistory } from "@/features/editor/hooks/use-history";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
@@ -67,6 +68,7 @@ const buildEditor = ({
   };
 
   return {
+    save: () => {},
     autoZoom,
     zoomIn: () => {
       let zoomRatio = canvas.getZoom();
@@ -605,6 +607,7 @@ export const useEditor = ({
 
 const {copy, paste} = useClipboard({canvas});
 
+const { save } = useHistory();
 
  const { autoZoom } = useAutoResize({
     canvas,
@@ -612,6 +615,7 @@ const {copy, paste} = useClipboard({canvas});
   });
 
   useCanvasEvents({
+    save,
     canvas,
     setSelectedObjects,
   });
