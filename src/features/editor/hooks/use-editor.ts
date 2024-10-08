@@ -22,7 +22,7 @@ import {
   createFilter,
   isTextType,
 } from "@/features/editor/utils";
-import { useHotKeys } from "@/features/editor/hooks/use-hotkeys";
+import { useHotkeys } from "@/features/editor/hooks/use-hotkeys";
 import { useHistory } from "@/features/editor/hooks/use-history";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
@@ -640,7 +640,7 @@ const { autoZoom } = useAutoResize({
     setSelectedObjects,
   });
 
-  useHotKeys({
+  useHotkeys({
     canvas, copy, paste, undo, redo, save
   })
 
