@@ -1,6 +1,5 @@
 import { fabric } from "fabric";
 import { useCallback, useState, useMemo } from "react";
-
 import { 
   Editor, 
   FILL_COLOR,
@@ -23,6 +22,7 @@ import {
   createFilter,
   isTextType,
 } from "@/features/editor/utils";
+import { useHotKeys } from "@/features/editor/hooks/use-hotkeys";
 import { useHistory } from "@/features/editor/hooks/use-history";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
@@ -640,6 +640,9 @@ const { autoZoom } = useAutoResize({
     setSelectedObjects,
   });
 
+  useHotKeys({
+    canvas, copy, paste, undo, redo, save
+  })
 
   const editor = useMemo(() => {
     if (canvas) {
