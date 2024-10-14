@@ -7,7 +7,7 @@ import { ActiveTool, Editor } from "@/features/editor/types";
 import { useGenerateImage } from "@/features/ai/api/use-generate-image";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 interface AiSidebarProps {
   editor: Editor | undefined;

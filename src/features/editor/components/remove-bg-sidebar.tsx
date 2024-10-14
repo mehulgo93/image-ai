@@ -7,7 +7,7 @@ import { ActiveTool, Editor } from "@/features/editor/types";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { useRemoveBackgroundImage } from "@/features/ai/api/use-remove-background";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 interface RemoveBgSidebarProps {
   editor: Editor | undefined;

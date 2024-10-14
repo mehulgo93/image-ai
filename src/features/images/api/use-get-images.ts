@@ -1,5 +1,5 @@
 import {client} from "@/lib/hono";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetImages = () => {
