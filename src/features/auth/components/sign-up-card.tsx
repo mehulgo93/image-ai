@@ -11,11 +11,11 @@ import {
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { AlertTriangle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSignUp } from "@/features/auth/hook/use-sign-up";
-import { toast } from "sonner";
 
 export const SignUpCard = () => {
   const mutation = useSignUp();
@@ -53,6 +53,12 @@ export const SignUpCard = () => {
           Use your email or another service to continue
         </CardDescription>
       </CardHeader>
+      {!!mutation.error && (
+        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-destructive text-sm mb-6">
+          <AlertTriangle className="size-4" />
+          <p>Something went wrong</p>
+        </div>
+      )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form onSubmit={onCredentialsSignUp} className="space-y-2.5">
           <Input
