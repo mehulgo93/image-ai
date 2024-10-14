@@ -22,6 +22,7 @@ import { useFilePicker } from "use-file-picker";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/features/editor/components/logo";
 import { ActiveTool, Editor } from "@/features/editor/types";
+import { UserButton } from "@/features/auth/components/user-button";
 
 interface NavbarProps {
   editor: Editor | undefined;
@@ -168,7 +169,7 @@ export const Navbar = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* TODO: add user button component */}
+          <UserButton />
         </div>
       </div>
     </nav>

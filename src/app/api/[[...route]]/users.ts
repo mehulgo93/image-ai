@@ -1,6 +1,6 @@
 
 import { z } from "zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
 import { users } from "@/db/schema";
