@@ -1,5 +1,6 @@
 import ai from "./ai";
 import {Hono} from "hono";
+import users from "./users";
 import images from "./images";
 import {handle} from "hono/vercel";
 
@@ -11,6 +12,7 @@ const app = new Hono().basePath("/api");
 const routes = app 
 .route("/ai", ai)
 .route("/images", images)
+.route("/users", users)
 
 export const GET = handle(app);
 export const POST = handle(app);

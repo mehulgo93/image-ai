@@ -1,6 +1,6 @@
 "use client";
-
 import Link from "next/link";
+import { useState } from "react";
 import {
   Card,
   CardTitle,
@@ -11,9 +11,25 @@ import {
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { AlertTriangle } from "lucide-react";
 
 export const SignInCard = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const params = useSearchParams();
+  const error = params.get("error");
+  const onCredentialsSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signIn("credentials", {
+      email: email,
+      password: password,
+      callbackUrl: "/",
+    });
+  };
   const onProviderSignIn = (provider: "github" | "google") => {
     signIn(provider, { callbackUrl: "/" });
   };
@@ -25,7 +41,33 @@ export const SignInCard = () => {
           Use your email or another service to continue
         </CardDescription>
       </CardHeader>
+      {!!error && (
+        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-destructive text-sm mb-6">
+          <AlertTriangle className="size-4" />
+          <p>Invalid email or password</p>
+        </div>
+      )}
       <CardContent className="space-y-5 px-0 pb-0">
+        <form onSubmit={onCredentialsSignIn} className="space-y-2.5">
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            type="email"
+            required
+          />
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            type="password"
+            required
+          />
+          <Button type="submit" className="w-full" size="lg">
+            Sign in
+          </Button>
+        </form>
+        <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
             onClick={() => onProviderSignIn("google")}
