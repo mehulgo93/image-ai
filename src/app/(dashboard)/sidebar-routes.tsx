@@ -10,12 +10,12 @@ export const SidebarRoutes = () => {
       <div className="px-4">
         <Button
           onClick={() => {}}
-          className="w-full rounded-xl border-none hover:bg-white hover:opacity-75 transition"
+          className="w-full flex items-center justify-center gap-2 rounded-xl border-none bg-gradient-to-r from-sky-400 to-blue-300 text-white hover:from-sky-300 hover:to-blue-200 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
           variant="outline"
           size="lg"
         >
-          <Crown className="mr-2 h-4 w-4 fill-yellow-500 text-yellow-500" />
-          Upgrade to Image AI Pro
+          <Crown className="mr-2 size-4 fill-yellow-500 text-yellow-500" />
+          Subscribe to Pro
         </Button>
       </div>
       <div className="px-3">
