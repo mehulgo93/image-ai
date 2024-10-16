@@ -14,7 +14,7 @@ export const SidebarRoutes = () => {
       <div className="px-4">
         <Button
           onClick={() => {}}
-          className="w-full flex items-center justify-center gap-2 rounded-xl border-none bg-gradient-to-r from-sky-400 to-blue-300 text-white hover:from-sky-300 hover:to-blue-200 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          className="w-full flex items-center justify-center gap-2 rounded-xl border-none bg-gradient-to-r from-[#2e62cb] via-[#0073ff] to-[#3faff5] text-white hover:from-[#2e62cb] hover:to-[#3faff5] shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
           variant="outline"
           size="lg"
         >
