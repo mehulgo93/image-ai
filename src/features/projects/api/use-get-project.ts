@@ -19,7 +19,7 @@ export const useGetProject = (id: string) => {
       if (!response.ok) {
         throw new Error("Failed to fetch project");
       }
-
+      
       const { data } = await response.json();
       return data;
     },
