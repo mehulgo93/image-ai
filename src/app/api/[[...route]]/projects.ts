@@ -210,7 +210,7 @@ const app = new Hono()
           )
         );
 
-      if (data.length === 0) {
+      if (data?.length === 0) {
         return c.json({ error: "Not found" }, 404);
       }
 

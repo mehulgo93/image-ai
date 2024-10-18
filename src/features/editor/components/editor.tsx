@@ -9,6 +9,7 @@ import { Sidebar } from "@/features/editor/components/sidebar";
 import { Toolbar } from "@/features/editor/components/toolbar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AiSidebar } from "@/features/editor/components/ai-sidebar";
+import { ResponseType } from "@/features/projects/api/use-get-project";
 import { DrawSidebar } from "@/features/editor/components/draw-sidebar";
 import { TextSidebar } from "@/features/editor/components/text-sidebar";
 import { FontSidebar } from "@/features/editor/components/font-sidebar";
@@ -22,7 +23,11 @@ import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar"
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
 
-export const Editor = () => {
+interface EditorProps {
+  initialData: ResponseType["data"];
+}
+
+export const Editor = ({ initialData }: EditorProps) => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {

@@ -1,6 +1,8 @@
-import { useGetProject } from "@/features/projects/api/use-get-project";
-import { Editor } from "@/features/editor/components/editor";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { Loader, TriangleAlert } from "lucide-react";
+import { Editor } from "@/features/editor/components/editor";
+import { useGetProject } from "@/features/projects/api/use-get-project";
 
 interface EditorProjectIdPageProps {
   params: {
@@ -20,13 +22,18 @@ const EditorProjectIdPage = async ({ params }: EditorProjectIdPageProps) => {
   }
 
   if (isError) {
-    <div className="flex flex-col items-center justify-center h-full gap-y-5">
-      <TriangleAlert className="size-6 " />
-      <p className="text-muted-foreground text-sm">Failed to load project</p>
-    </div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-y-5">
+        <TriangleAlert className="size-6 text-muted-foreground" />
+        <p className="text-muted-foreground text-sm">Failed to load project</p>
+        <Button asChild variant="secondary">
+          <Link href="/">Back to Home</Link>
+        </Button>
+      </div>
+    );
   }
 
-  return <Editor />;
+  return <Editor initialData={data} />;
 };
 
 export default EditorProjectIdPage;
