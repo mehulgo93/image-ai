@@ -20,7 +20,7 @@ export const Banner = () => {
         height: 1200,
       },
       {
-        onSuccess: (data: { id: string }) => {
+        onSuccess: ({ data }) => {
           router.push(`/editor/${data.id}`);
         },
       }
