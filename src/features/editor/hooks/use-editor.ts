@@ -27,6 +27,7 @@ import {
 import { useHotkeys } from "@/features/editor/hooks/use-hotkeys";
 import { useHistory } from "@/features/editor/hooks/use-history";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
+import { useLoadState } from "@/features/editor/hooks/use-load-state";
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { useWindowEvents } from "@/features/editor/hooks/use-window-events";
 import { useCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
@@ -724,6 +725,14 @@ const { autoZoom } = useAutoResize({
   useHotkeys({
     canvas, copy, paste, undo, redo, save
   })
+
+  useLoadState({
+    autoZoom,
+    canvas,
+    initialState,
+    canvasHistory,
+    setHistoryIndex,
+  });
 
   const editor = useMemo(() => {
     if (canvas) {

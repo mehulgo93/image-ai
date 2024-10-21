@@ -1,6 +1,7 @@
 "use client";
 
 import { fabric } from "fabric";
+import debunce from "lodash.debounce";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 import { Footer } from "@/features/editor/components/footer";
 import { Navbar } from "@/features/editor/components/navbar";
@@ -16,13 +17,14 @@ import { FontSidebar } from "@/features/editor/components/font-sidebar";
 import { ImageSidebar } from "@/features/editor/components/image-sidebar";
 import { ShapeSidebar } from "@/features/editor/components/shape-sidebar";
 import { FilterSidebar } from "@/features/editor/components/filter-sidebar";
+import { useUpdateProject } from "@/features/projects/api/use-update-project";
 import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
 import { ActiveTool, selectionDependentTools } from "@/features/editor/types";
 import { SettingsSidebar } from "@/features/editor/components/settings-sidebar";
 import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar";
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
-import { useUpdateProject } from "@/features/projects/api/use-update-project";
+import debounce from "lodash.debounce";
 
 interface EditorProps {
   initialData: ResponseType["data"];
@@ -32,10 +34,10 @@ export const Editor = ({ initialData }: EditorProps) => {
   const { mutate } = useUpdateProject(initialData.id);
 
   const debouncedSave = useCallback(
-    (values: { json: string; height: number; width: number }) => {
+    debounce((values: { json: string; height: number; width: number }) => {
       // TODO: add initial data
       mutate(values);
-    },
+    }, 500),
     [mutate]
   );
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -88,6 +90,7 @@ export const Editor = ({ initialData }: EditorProps) => {
   return (
     <div className="h-full flex flex-col">
       <Navbar
+        id={initialData.id}
         activeTool={activeTool}
         onChangeActiveTool={onChangeActiveTool}
         editor={editor}

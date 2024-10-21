@@ -159,6 +159,7 @@ const app = new Hono()
         .partial()
     ),
     async (c) => {
+      
       const auth = c.get("authUser");
       const { id } = c.req.valid("param");
       const values = c.req.valid("json");
