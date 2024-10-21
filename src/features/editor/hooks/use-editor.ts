@@ -677,6 +677,7 @@ const buildEditor = ({
 
 export const useEditor = ({
   clearSelectionCallback,
+  saveCallback,
 }: EditorHookProps) => {
 
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);

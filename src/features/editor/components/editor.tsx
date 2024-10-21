@@ -22,12 +22,21 @@ import { SettingsSidebar } from "@/features/editor/components/settings-sidebar";
 import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar";
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
+import { useUpdateProject } from "@/features/projects/api/use-update-project";
 
 interface EditorProps {
   initialData: ResponseType["data"];
 }
 
 export const Editor = ({ initialData }: EditorProps) => {
+  const { mutate } = useUpdateProject(initialData.id);
+
+  const debouncedSave = useCallback(
+    (values: { json: string; height: number; width: number }) => {
+      mutate(values);
+    },
+    [mutate]
+  );
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {
@@ -37,6 +46,7 @@ export const Editor = ({ initialData }: EditorProps) => {
   }, [activeTool]);
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
+    saveCallback: debouncedSave,
   });
 
   const onChangeActiveTool = useCallback(
