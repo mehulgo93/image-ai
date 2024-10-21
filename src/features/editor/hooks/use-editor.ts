@@ -1,5 +1,5 @@
 import { fabric } from "fabric";
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useRef } from "react";
 import { 
   Editor, 
   FILL_COLOR,
@@ -676,9 +676,15 @@ const buildEditor = ({
 };
 
 export const useEditor = ({
+  defaultState,
+  defaultHeight,
+  defaultWidth,
   clearSelectionCallback,
   saveCallback,
 }: EditorHookProps) => {
+  const initialState = useRef(defaultState);
+  const initialHeight = useRef(defaultHeight);
+  const initialWidth = useRef(defaultWidth);
 
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
@@ -700,7 +706,7 @@ export const useEditor = ({
       redo,
       canvasHistory,
       setHistoryIndex
-      } = useHistory({canvas});
+      } = useHistory({canvas, saveCallback});
 
 const {copy, paste} = useClipboard({canvas});
 
@@ -784,8 +790,8 @@ const { autoZoom } = useAutoResize({
       });
 
       const initialWorkspace = new fabric.Rect({
-        width: 900, 
-        height: 1200,
+        width: initialWidth.current, 
+        height: initialHeight.current,
         name: "clip",
         fill: "white",
         selectable: false,

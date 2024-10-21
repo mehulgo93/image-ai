@@ -33,6 +33,7 @@ export const Editor = ({ initialData }: EditorProps) => {
 
   const debouncedSave = useCallback(
     (values: { json: string; height: number; width: number }) => {
+      // TODO: add initial data
       mutate(values);
     },
     [mutate]
@@ -45,6 +46,9 @@ export const Editor = ({ initialData }: EditorProps) => {
     }
   }, [activeTool]);
   const { init, editor } = useEditor({
+    defaultState: initialData.json,
+    defaultHeight: initialData.height,
+    defaultWidth: initialData.width,
     clearSelectionCallback: onClearSelection,
     saveCallback: debouncedSave,
   });

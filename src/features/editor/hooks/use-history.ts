@@ -38,9 +38,13 @@ export const useHistory = ({canvas, saveCallback}: useHistoryProps) => {
             setHistoryIndex(canvasHistory.current.length -1);
         }
 
-        //TODO: Save Callback
+        const workspace = canvas.getObjects().find((obj) => obj.name === "clip");
+        const height = workspace?.height || 0;
+        const width = workspace?.width || 0;
 
-    }, [canvas]);
+        saveCallback?.({json, height, width});
+
+    }, [canvas, saveCallback]);
 
 
     const undo = useCallback(() => {
