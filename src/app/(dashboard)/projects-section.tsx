@@ -20,15 +20,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useDeleteProject } from "@/features/projects/api/use-delete-project";
 import { useDuplicateProject } from "@/features/projects/api/use-duplicate-project";
+
 export const ProjectsSection = () => {
   const router = useRouter();
   const duplicateMutation = useDuplicateProject();
+  const removeMutation = useDeleteProject();
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useGetProjects();
 
   const onCopy = (id: string) => {
     duplicateMutation.mutate({ id });
+  };
+
+  const onDelete = (id: string) => {
+    removeMutation.mutate({ id });
   };
 
   if (status === "error") {
@@ -118,8 +125,8 @@ export const ProjectsSection = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="h-10 cursor-pointer"
-                          disabled={false}
-                          onClick={() => {}}
+                          disabled={removeMutation.isPending}
+                          onClick={() => onDelete(project.id)}
                         >
                           <Trash2Icon className="size-4 mr-2" />
                           Delete
