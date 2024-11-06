@@ -1,14 +1,39 @@
 "use client";
 
-import { useGetTemplates } from "@/features/projects/api/use-get-templates";
+import {
+  ResponseType,
+  useGetTemplates,
+} from "@/features/projects/api/use-get-templates";
 import { AlertTriangle, Loader } from "lucide-react";
 import { TemplateCard } from "./template-card";
+import { useCreateProject } from "@/features/projects/api/use-create-project";
+import { useRouter } from "next/navigation";
 
 export const TemplatesSection = () => {
+  const router = useRouter();
+  const mutation = useCreateProject();
   const { data, isLoading, isError } = useGetTemplates({
     page: "1",
     limit: "4",
   });
+
+  const onClick = (template: ResponseType["data"][0]) => {
+    // TODO: check if Template is Pro
+
+    mutation.mutate(
+      {
+        name: `${template.name} project`,
+        json: template.json,
+        width: template.width,
+        height: template.height,
+      },
+      {
+        onSuccess: ({ data }) => {
+          router.push(`/editor/${data.id}`);
+        },
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -44,8 +69,8 @@ export const TemplatesSection = () => {
             key={template.id}
             title={template.name}
             imageSrc={template.thumbnailUrl || ""}
-            onClick={() => {}}
-            disabled={false}
+            onClick={() => onClick(template)}
+            disabled={mutation.isPending}
             description={`${template.width} x ${template.height}px`}
             width={template.width}
             height={template.height}

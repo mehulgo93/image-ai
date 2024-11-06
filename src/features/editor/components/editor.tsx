@@ -1,7 +1,7 @@
 "use client";
 
 import { fabric } from "fabric";
-import debunce from "lodash.debounce";
+import debounce from "lodash.debounce";
 import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 import { Footer } from "@/features/editor/components/footer";
 import { Navbar } from "@/features/editor/components/navbar";
@@ -20,11 +20,11 @@ import { FilterSidebar } from "@/features/editor/components/filter-sidebar";
 import { useUpdateProject } from "@/features/projects/api/use-update-project";
 import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
 import { ActiveTool, selectionDependentTools } from "@/features/editor/types";
+import { TemplateSidebar } from "@/features/editor/components/template-sidebar";
 import { SettingsSidebar } from "@/features/editor/components/settings-sidebar";
 import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar";
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
-import debounce from "lodash.debounce";
 
 interface EditorProps {
   initialData: ResponseType["data"];
@@ -161,6 +161,11 @@ export const Editor = ({ initialData }: EditorProps) => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <SettingsSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <TemplateSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

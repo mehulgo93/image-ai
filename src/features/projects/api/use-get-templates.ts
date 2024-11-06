@@ -1,9 +1,11 @@
 import {client} from "@/lib/hono";
 import { toast } from "sonner";
-import { InferRequestType } from "hono";
 import { useQuery } from "@tanstack/react-query";
+import { InferRequestType, InferResponseType } from "hono";
 
+export type ResponseType = InferResponseType<typeof client.api.projects.templates.$get, 200>;
 type RequestType = InferRequestType<typeof client.api.projects.templates.$get>["query"];
+
 
 export const useGetTemplates = (apiQuery: RequestType) => {
     const query = useQuery({
