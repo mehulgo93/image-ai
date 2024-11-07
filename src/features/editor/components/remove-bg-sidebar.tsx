@@ -4,6 +4,7 @@ import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActiveTool, Editor } from "@/features/editor/types";
+import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { useRemoveBackgroundImage } from "@/features/ai/api/use-remove-background";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
@@ -20,6 +21,7 @@ export const RemoveBgSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: RemoveBgSidebarProps) => {
+  const { shouldBlock, triggerPaywall } = usePaywall();
   const mutation = useRemoveBackgroundImage();
   const selectedObject = editor?.selectedObjects[0];
   // check the entry on the console log of the selected object to find out the original element which contains the url of the image.
@@ -30,7 +32,10 @@ export const RemoveBgSidebar = ({
   };
 
   const onClick = () => {
-    // TODO: Block with payroll
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     mutation.mutate(
       { image: imageSrc },
