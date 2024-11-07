@@ -47,6 +47,7 @@
     "react-color": "^2.19.3",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
+    "react-popover": "^0.5.10",
     "react-use": "^17.5.0",
     "replicate": "^0.31.1",
     "sonner": "^1.5.0",
