@@ -10,11 +10,13 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { useCheckout } from "@/features/subscriptions/api/use-checkout";
 import { useSubscriptionModal } from "@/features/subscriptions/store/use-subscription-model";
 import { CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 
 export const SubscriptionModal = () => {
+  const mutation = useCheckout();
   const { isOpen, onClose } = useSubscriptionModal();
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -50,7 +52,11 @@ export const SubscriptionModal = () => {
           </li>
         </ul>
         <DialogFooter className="pt-2 gap-y-2 mt-4">
-          <Button className="w-full" onClick={() => {}} disabled={false}>
+          <Button
+            className="w-full"
+            onClick={() => mutation.mutate()}
+            disabled={mutation.isPending}
+          >
             Upgrade
           </Button>
         </DialogFooter>
