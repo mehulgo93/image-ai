@@ -1,10 +1,11 @@
 import ai from "./ai";
-import {Context, Hono} from "hono";
 import users from "./users";
 import images from "./images";
 import projects from "./projects";
+import {Context, Hono} from "hono";
 import {handle} from "hono/vercel";
 import authConfig from "@/auth.config";
+import subscriptions from "./subscriptions";
 import { AuthConfig, initAuthConfig } from "@hono/auth-js";
 
 // Revert to "edge" if planning on running on the edge
@@ -26,6 +27,7 @@ const routes = app
 .route("/images", images)
 .route("/users", users)
 .route("/projects", projects)
+.route("/subscriptions", subscriptions)
 
 export const GET = handle(app);
 export const POST = handle(app);
